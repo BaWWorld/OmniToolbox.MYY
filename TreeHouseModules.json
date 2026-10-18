@@ -2,6 +2,16 @@
   "SchemaVersion": 1,
   "Modules": [
     {
+      "InternalName": "ReplyChannelSwitch",
+      "Name": "聊天回复选项",
+      "Author": "以默＆MYY",
+      "Description": "输入 /r，将当前聊天频道切换为悄悄话。",
+      "Version": "1.0.0",
+      "MinimumOmniVersion": "1.1.7.2",
+      "File": "Modules/ReplyChannelSwitch.cs",
+      "Sha256": "0B14693CC9C97C3063588B6FD36B09D2D0158968EFF025699B415929BEF920E2"
+    },
+    {
       "InternalName": "HideCommunityButtons",
       "Name": "隐藏同好菜单",
       "Author": "MYY",
