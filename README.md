@@ -1,36 +1,44 @@
-# OmniToolbox.TreeHouseOnline
+# OmniToolbox.MYY
 
-Omni Toolbox 树树妙妙屋在线模块示范仓库，提供模块编写、SHA256 校验说明。
+MYY 的 Omni Toolbox（树树妙妙屋）在线模块仓库。
+
+## 模块列表
+
+- **隐藏同好菜单**（HideCommunityButtons）— 隐藏中文端社交菜单中的“同好招募”和“同好会”。
+
+- **显示长婚礼长纱**（LongWeddingVeil）— 将婚礼头纱模型替换为长款头纱。
 
 ## 在 Omni 中添加
 
-在“插件设置 → 在线模块”中填写仓库地址：
+在「插件设置 → 在线模块」中填写清单地址。
+
+地址：
 
 ```text
-https://github.com/YouShux/OmniToolbox.TreeHouseOnline
+https://github.com/BaWWorld/OmniToolbox.MYY
 ```
 
-Omni 读取默认分支根目录的 `TreeHouseModules.json`，自动下载并安装清单中的模块。
-首次安装后模块默认关闭，在“树树妙妙屋 → 在线”中手动启用。
+链接：
 
-也可以填写清单的 GitHub 文件页面地址或 raw HTTPS 地址。
-当前支持公开仓库中的 `.cs`、`.dll` 文件，不支持私有仓库、Release 附件或 ZIP。
+```text
+https://raw.githubusercontent.com/BaWWorld/OmniToolbox.MYY/main/TreeHouseModules.json
+```
 
-模块拥有与 Omni 相同的运行权限，没有独立沙箱。仅安装可信来源；
-启用自动更新意味着持续信任该仓库后续发布的代码。
+首次安装后模块默认关闭，在「树树妙妙屋 → 在线」中手动启用。
 
 ## 仓库结构
 
 ```text
-OmniToolbox.TreeHouseOnline/
+OmniToolbox.MYY/
   Modules/
-    OnlineIconExample.cs
+    HideCommunityButtons.cs
+    LongWeddingVeil.cs
   README.md
   TreeHouseModules.json
 ```
 
-`Modules` 存放模块文件，根目录的清单描述可下载模块。
-在线模块不是独立 Dalamud 插件，不能直接使用完整插件的 `Pluginmaster.json`。
+模块作者为 `MYY`。模块文件由 Omni 在线模块加载器下载，并依据
+`TreeHouseModules.json` 中的 SHA256 校验值进行校验。
 
 ## 编写在线模块
 
