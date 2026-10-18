@@ -1,0 +1,25 @@
+{
+  "SchemaVersion": 1,
+  "Modules": [
+    {
+      "InternalName": "HideCommunityButtons",
+      "Name": "隐藏同好菜单",
+      "Author": "MYY",
+      "Description": "隐藏中文端社交窗口中的“同好招募”和“同好会”。",
+      "Version": "1.0.0",
+      "MinimumOmniVersion": "1.1.3.0",
+      "File": "Modules/HideCommunityButtons.cs",
+      "Sha256": "82F8ECAF6F6BF69B4ADDF9FF19E336A66223ECB6235321504F7A74A75D5190CF"
+    },
+    {
+      "InternalName": "LongWeddingVeil",
+      "Name": "显示长婚礼长纱",
+      "Author": "MYY",
+      "Description": "将婚礼头纱模型替换为长款头纱。",
+      "Version": "1.0.0",
+      "MinimumOmniVersion": "1.1.3.0",
+      "File": "Modules/LongWeddingVeil.cs",
+      "Sha256": "E342DC40436F62ED00C8B800A248EB4ACDA5BF2F922AD1025B8BABBBD0B12B2A"
+    }
+  ]
+}
