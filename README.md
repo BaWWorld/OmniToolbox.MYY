@@ -49,5 +49,5 @@ OmniToolbox.MYY/
   TreeHouseModules.json
 ```
 
-各模块作者见模块列表及清单。模块文件由 Omni 在线模块加载器下载，并依据
+模块文件由 Omni 在线模块加载器下载，并依据
 `TreeHouseModules.json` 中的 SHA256 校验值进行校验。
