@@ -1,4 +1,5 @@
 using Dalamud.Hooking;
+using System.Collections.Generic;
 using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using FFXIVClientStructs.FFXIV.Client.Graphics.Scene;
 using OmenTools;
@@ -6,6 +7,8 @@ using OmenTools.Interop.Game.Models;
 using OmniToolbox.Common.Module.Abstractions;
 using OmniToolbox.Common.Module.Enums;
 using OmniToolbox.Common.Module.Models;
+using TreeTools.Lifecycle;
+using OmniToolbox.UI;
 
 namespace OmniToolbox.TreeHouseOnline;
 
@@ -13,7 +16,8 @@ namespace OmniToolbox.TreeHouseOnline;
 /// 行为参考 SimpleTweaksPlugin 的 LongVeil。
 /// 本文件为独立重写；SimpleTweaksPlugin 使用 AGPL-3.0-or-later。
 /// </summary>
-public sealed unsafe class LongWeddingVeil : ModuleBase
+[ModuleApiVersion(1)]
+public sealed unsafe class LongWeddingVeil : OmniModuleBase
 {
     private const uint LongVeilModelId = 208;
     private const uint ShortVeilModelId = 199;
@@ -24,30 +28,22 @@ public sealed unsafe class LongWeddingVeil : ModuleBase
 
     public override ModuleInfo Info { get; } = new()
     {
-        Title = "显示长婚礼长纱",
-        Description = "将婚礼头纱模型替换为长款头纱。",
         Category = ModuleCategory.Interface,
         Author = "MYY"
     };
 
-    protected override void OnEnable()
-    {
-        try
+    public override ModuleLocalization Localization { get; } = ModuleLocalization.Create(
+        new Dictionary<string, string>
         {
-            hook = SetEquipmentSlotModelSignature.GetHook<Human.Delegates.SetEquipmentSlotModel>(Detour);
-            hook.Enable();
-        }
-        catch
-        {
-            hook?.Dispose();
-            hook = null;
-        }
-    }
+            ["Title"] = "显示长婚礼长纱",
+            ["Description"] = "将婚礼头纱模型替换为长款头纱。"
+        });
 
-    protected override void OnDisable()
+    protected override void OnStart(FeatureLifetime activation)
     {
-        hook?.Dispose();
-        hook = null;
+        hook = SetEquipmentSlotModelSignature.GetHook<Human.Delegates.SetEquipmentSlotModel>(Detour);
+        activation.Add(hook);
+        hook.Enable();
     }
 
     private bool Detour(Human* human, uint slot, EquipmentModelId* model)

@@ -12,10 +12,13 @@ using OmniToolbox.Common.Module.Abstractions;
 using OmniToolbox.Common.Module.Enums;
 using OmniToolbox.Common.Module.Models;
 using OmniToolbox.Host;
+using TreeTools.Lifecycle;
+using OmniToolbox.UI;
 
 namespace OmniToolbox.TreeHouseOnline;
 
-public sealed unsafe class HideCommunityButtons : ModuleBase
+[ModuleApiVersion(1)]
+public sealed unsafe class HideCommunityButtons : OmniModuleBase
 {
     private const int StartIndex = 5;
     private const int MaxEntries = 20;
@@ -28,38 +31,27 @@ public sealed unsafe class HideCommunityButtons : ModuleBase
 
     public override ModuleInfo Info { get; } = new()
     {
-        Title = "隐藏同好菜单",
-        Description = "隐藏中文端社交菜单中的“同好招募”和“同好会”。",
         Category = ModuleCategory.Interface,
         Author = "MYY"
     };
 
-    protected override void OnEnable()
-    {
-        try
+    public override ModuleLocalization Localization { get; } = ModuleLocalization.Create(
+        new Dictionary<string, string>
         {
-            openHook = DService.Instance().Hook.HookFromMemberFunction(
-                typeof(AgentHUD.MemberFunctionPointers), "OpenSystemMenu",
-                (AgentHUD.Delegates.OpenSystemMenu)OpenDetour);
-            openHook.Enable();
-            generateHook = GenerateSig.GetHook<GenerateSystemMenuDelegate>(GenerateDetour);
-            generateHook.Enable();
-        }
-        catch
-        {
-            generateHook?.Dispose();
-            openHook?.Dispose();
-            generateHook = null;
-            openHook = null;
-        }
-    }
+            ["Title"] = "隐藏同好菜单",
+            ["Description"] = "隐藏中文端社交菜单中的“同好招募”和“同好会”。"
+        });
 
-    protected override void OnDisable()
+    protected override void OnStart(FeatureLifetime activation)
     {
-        generateHook?.Dispose();
-        openHook?.Dispose();
-        generateHook = null;
-        openHook = null;
+        openHook = DService.Instance().Hook.HookFromMemberFunction(
+            typeof(AgentHUD.MemberFunctionPointers), "OpenSystemMenu",
+            (AgentHUD.Delegates.OpenSystemMenu)OpenDetour);
+        activation.Add(openHook);
+        generateHook = GenerateSig.GetHook<GenerateSystemMenuDelegate>(GenerateDetour);
+        activation.Add(generateHook);
+        openHook.Enable();
+        generateHook.Enable();
     }
 
     private void OpenDetour(AgentHUD* agent, AtkValue* values, uint menuSize)
